@@ -5,9 +5,9 @@ export default function App() {
   const [age, setAge] = useState('33')
   return (
     <View style={styles.container}>
-      <Text> Enter Your Name </Text>
+      <Text> Enter Your Name Please </Text>
       <TextInput placeholder ='e.g. John Doe' onChangeText={val => setName(val) } style={styles.input}/>
-      <Text> Enter Your Age </Text>
+      <Text> Enter Your Age Please </Text>
       <TextInput placeholder ='e.g. 19' onChangeText={val => setAge(val) } style={styles.input}/>
       <Text>My name is {name} and I'm {age} years old</Text>
       <Button title='Click Me' onPress={()=> setName('Akash Islam')}/>
