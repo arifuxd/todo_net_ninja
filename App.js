@@ -1,16 +1,44 @@
-import { StyleSheet, Text, View, Button, TextInput } from 'react-native';
 import { useState } from 'react';
+import { FlatList, StyleSheet, View, Text } from 'react-native';
+import Header from './components/Header';
+import TodoItem from './components/TodoItem';
+import AddTodo from './AddTodo';
 export default function App() {
-  const [name, setName] = useState('Ariful Islam')
-  const [age, setAge] = useState('33')
+
+  const [todos, setTodos] = useState([
+    {text : 'Buy coffee', id : '1'},
+    {text : 'Create an App', id : '2'},
+    {text : 'Play on the Switch', id : '3'}
+  ]);
+
+  const pressHandler = key => {
+    setTodos (prevTodos => {
+      return prevTodos.filter(todo => todo.id != key)
+    } )
+  }
+
+  const submitHandler = text => {
+    setTodos((prevTodos)=>{
+      return [{text : text, key : Math.random().toString()}, ...prevTodos]
+    })
+  }
+
+
   return (
     <View style={styles.container}>
-      <Text> Enter Your Name Please </Text>
-      <TextInput placeholder ='e.g. John Doe' onChangeText={val => setName(val) } style={styles.input}/>
-      <Text> Enter Your Age Please </Text>
-      <TextInput placeholder ='e.g. 19' onChangeText={val => setAge(val) } style={styles.input}/>
-      <Text>My name is {name} and I'm {age} years old</Text>
-      <Button title='Click Me' onPress={()=> setName('Akash Islam')}/>
+      <Header/>
+      <View style={styles.content}>
+        <AddTodo submitHandler ={submitHandler}/>
+          <View style={styles.list}>
+              <FlatList
+                data={todos}
+                keyExtractor={key => key.id}
+                renderItem ={({item}) => (
+                <TodoItem item={item} pressHandler={pressHandler}/>
+                )}
+              />
+          </View>
+      </View>
     </View>
   );
 }
@@ -19,13 +47,11 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-  input :{
-    borderWidth : 1,
-    borderColor : '#ccc',
-    padding : 10,
-    margin : 16,
+  }, 
+  content : {
+    padding : 40,
+  }, 
+  list : {
+    marginTop : 20,
   }
 });
