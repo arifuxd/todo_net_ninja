@@ -21,6 +21,7 @@ export default function App() {
     setTodos((prevTodos)=>{
       return [{text : text, key : Math.random().toString()}, ...prevTodos]
     })
+    
   }
 
 
